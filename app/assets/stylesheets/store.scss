@@ -1,0 +1,87 @@
+// Place all the styles related to the store controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.carousel-inner {
+	.item {
+		img {
+			min-height: 235px;
+		}
+	}
+}
+.m-tags {
+	margin: 10px;
+	.m-tag {
+		display: inline-block;
+		width: 20%;
+    padding: 5px;
+		float: left;
+		img {
+			width: 100%;
+			min-height: 40px;
+		}
+		label {
+			text-align: center;
+			width: 100%;
+			font-size: 14px;
+			margin: 4px 0;
+		}
+	}
+}
+
+.m-group {
+	.m-group-title {
+		img {
+			display: inline-block;
+			float: left;
+			margin-left: 8px;
+		}
+		div {
+			font-size: 20px;
+			font-weight: bold;
+			line-height: 50px;
+			margin-left: 8px;
+			display: inline-block;
+			float: left;
+		}
+	}
+	.m-group-info-wapper {
+		width: 100%;
+		overflow-x: auto;
+	}
+	.m-group-info {
+		.item {
+			display: inline-block;
+			float: left;
+			width: 50%;
+			padding: 10px;
+			img {
+				width: 100%;
+				min-height: 175px;
+				border-radius: 10px;
+			}
+			div {
+				text-align: center;
+				margin-top: 5px;
+				max-height: 20px;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+		}
+	}
+}
+.giw-1 {
+	width: 50%;
+	.item { width: 100%!important; }
+}
+.giw-2 {
+	width: 100%;
+	.item { width: 50%!important; }
+}
+.giw-3 { width: 150%; .item { width: 33.3%!important; } }
+.giw-4 { width: 200%; .item { width: 25%!important; } }
+.giw-5 { width: 250%; .item { width: 20%!important; } }
+.giw-6 { width: 300%; .item { width: 16.66%!important; } }
+.giw-7 { width: 350%; .item { width: 14.28%!important; } }
+.giw-8 { width: 400%; .item { width: 12.5%!important; } }
+.giw-9 { width: 450%; .item { width: 11.1%!important; } }
+.giw-10 { width: 500%; .item { width: 10%!important; } }

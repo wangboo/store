@@ -1,0 +1,54 @@
+<%= cache('main_carouse') do %>
+<%= carouse_helper(IntoCarouse.carouse_data(@store)) %>
+<% end %>
+
+<%= cache('main_tags') do %>
+<div class="m-tags clearfix">
+	<% IntoTag.all_visible_and_sorted(@store).each do |tag| %>
+	<div class="m-tag">
+		<%= link_to show_path(k1: tag.k1, k2: tag.k2, b: tag.brand, store_id: @store.id) do %>
+			<%= image_tag tag.icon %>
+			<label><%=tag.name %></label>
+		<% end %>
+	</div>
+	<% end %>
+</div>
+<% end %>
+<%= block_helper %>
+
+<!-- begin group -->
+<%= cache('main_group') do %>
+<% IntoGroup.all_visible_and_sorted(@store).each do |g| %>
+	<div class='m-group'>
+		<div class='m-group-title clearfix'>
+			<%=image_tag(g.icon) %>
+			<div style='color: <%=g.color %>'><%=g.title %></div>
+		</div>
+		<% if g.showMode == 0 %> <!-- 单行 -->
+		<div class='m-group-info-wapper'>
+		<div class='m-group-info <%= g.giw_class %> clearfix'>
+		<% else %>  <!-- 多行 -->
+		<div class='m-group-info clearfix'>
+		<% end %>
+		<% g.into_group_items_visible.each do |gi| %>
+			<div class='item'>
+				<%= image_tag(gi.item.default_image.image_path) %>
+				<div><%=gi.item.name %></div>
+			</div>
+		<% end %>
+		<% if g.showMode == 0 %>
+		</div>
+		<% end %>
+		</div>
+	</div>
+	<%= block_helper %>
+<% end %>
+<% end %>
+<!-- end group -->
+<div class='empty-footer'></div>
+
+<script type="text/javascript">
+$(function() {
+	$('.carousel').carousel();
+});
+</script>
