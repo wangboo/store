@@ -21,4 +21,27 @@ class ItemPrice < ApplicationRecord
 		}
 	end
 
+	def show_price(user) 
+		case user.role  
+		when 0 
+			initPrice
+		when 1 
+			workerPrice
+		when 2 
+			fxPrice
+		end 
+	end
+
+	def final_price(user)
+		p = case user.role 
+		when 0 # 普通用户
+			(initPrice * discount) / 10.0
+		when 1 # 工人
+			workerPrice
+		when 2 # 分销商
+			fxPrice
+		end
+		p.round(2).to_s
+	end
+
 end

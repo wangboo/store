@@ -1,0 +1,200 @@
+<div class='show-header'>
+	<div class='show-search'>
+		<span class='glyphicon glyphicon-search'></span>
+		<input id='search'/>
+	</div>
+	<div class='show-menu clearfix'>
+		<ul>
+			<li><div class='show-menu-type' s-menu='menuCat'>
+				<span class='glyphicon glyphicon-list'></span>
+				<label>种类：全部</label>
+			</div></li>
+			<li><div class='show-menu-type' s-menu='menuSort'>
+				<span class='glyphicon glyphicon-indent-left'></span>
+				<label>排序：推荐</label>
+			</div></li>
+			<li><div class='show-menu-type' s-menu='menuStore'>
+				<span class='glyphicon glyphicon-modal-window'></span>
+				<label>商店:<%=@store.name %></label>
+			</div></li>
+		</ul>
+	</div>
+	<div class='show-menu-dropdown' id='menuStore' style='display:none;'>
+		<% City.all_visible.select{|c|c.all_visible_stores.size > 0}.each do |c| %>
+		<div class='menu-item clearfix' s-type='store'>
+			<div class='type'><%= c.name %></div>
+			<div class='wapper clearfix'>
+				<% c.all_visible_stores.each do |s| %>
+					<% if s.id == @store.id %>
+					<div class='value active' cid='<%=s.id %>'><%= s.name %></div>
+					<% else %>
+					<div class='value' cid='<%=s.id %>'><%= s.name %></div>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<% end %>
+		
+	</div>
+	<div class='show-menu-dropdown' id='menuCat' style='display:none;'>
+		<div class='menu-item clearfix' s-type='c'>
+			<div class='type'>类型:</div>
+			<div class='wapper clearfix'>
+				<div class='value active' cid='0'>全部</div>
+			</div>
+		</div>
+		<div class='menu-item clearfix' s-type='k1' style='display:none;'>
+			<div class='type'>一类:</div>
+			<div class='wapper clearfix'>
+				<div class='value active' cid='0'>全部</div>
+			</div>
+		</div>
+		<div class='menu-item clearfix' s-type='k2' style='display:none;'>
+			<div class='type'>二类:</div>
+			<div class='wapper clearfix'>
+				<div class='value active' cid='0'>全部</div>
+			</div>
+		</div>
+		<div class='menu-item clearfix' s-type='b' style='display:none;'>
+			<div class='type'>品牌:</div>
+			<div class='wapper clearfix'>
+				<div class='value active' cid='0'>全部</div>
+			</div>
+		</div>
+	</div>
+	<!-- 排序 -->
+<div class='show-menu-dropdown' id='menuSort' style='display:none;'>
+	<div class='menu-item clearfix' s-type='s'>
+			<div class='type'>排序:</div>
+			<div class='wapper clearfix'>
+				<div class='value active' cid='default'>默认</div>
+				<div class='value' cid='good'>好评</div>
+				<div class='value' cid='bestSale'>畅销</div>
+				<div class='value' cid='new'>新品</div>
+			</div>
+		</div>
+</div>
+<!-- end 排序 -->
+</div>
+<!-- end show-header -->
+<div class='show-items-wrapper'>
+	<div class='show-items'></div>
+	<div class='show-loading'>
+		<img src='/assets/loading.gif'/>
+		<label>列表加载中。。。</label>
+	</div>
+</div>
+<!-- end show-items -->
+
+<!-- footer -->
+<div class='show-footer'>
+	<div class='holder clearfix'>
+		<div class='menu'>
+			<%= link_to cart_path do %>
+			<div><span class='glyphicon glyphicon-shopping-cart'></span></div>
+			<div><label>购物车</label></div>
+			<% end %>
+		</div>
+		<div class='menu'>
+			<%= link_to user_path do %>
+			<div><span class='glyphicon glyphicon-user'></span></div>
+			<div><label>我的</label></div>
+			<% end %>
+		</div>
+		<div class='ensure-cart'>
+			¥<label>0</label>
+		</div>
+	</div>
+</div>
+<!-- end footer -->
+<script type="text/javascript">
+	Show.params = <%= {
+		c: params[:c].to_i || 0,
+		k1: params[:k1].to_i || 0,
+		k2: params[:k2].to_i || 0,
+		b: params[:b].to_i || 0,
+		s: params[:s].to_i || 'default',
+	}.to_json.html_safe %>;
+	window.role = <%= @user.role %>;
+	Show.init();
+	
+</script>
+<script type="text/html" id='itemTpl'>
+	<div class='item' cid='${id}'>
+		<div class='img'>
+			<img src='${image}'/>
+		</div>
+		<div class='content'>
+			<div class='name'>${name}</div>
+			<div class='star'>
+				<span class='glyphicon glyphicon-star'></span>
+				<span>${star}</span>
+				<label>月售${saleCount}</label>
+			</div>
+			<div class='price-cart'>
+				<div class='price'>
+					<span class='glyphicon glyphicon-yen'></span>
+					<!-- if: ${price} != ${cprice} -->
+					<s>${price}</s>
+					<!-- /if -->
+					<label>${cprice}</label>
+				</div>
+				<div class='cart'></div>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/html" id='guigeTpl'>
+	<div class='show-guige' cid='${id}' style='display:none;'>
+		<div class='a1 clearfix'>
+			<div class='img'>
+				<img src='${img}'/>
+			</div>
+			<div class='info'>
+				<div class='name-row'>
+					<div class='name'>${name}</div>
+					<div class='close'>
+						<span class='glyphicon glyphicon-remove-circle'></span>
+					</div>
+				</div>
+				<div class='sub'>
+					<span class='glyphicon glyphicon-star'></span>
+					<span class='star'>${star}</span>
+					<label class='saleCount'>月售${saleCount}</label>
+				</div>
+				<div class='price'>
+					<span class='glyphicon glyphicon-yen'></span>
+					<!-- if: ${price} != ${cprice} -->
+					<s id='sg-price'>${price}</s>
+					<!-- /if -->
+					<label id='sg-cprice'>${cprice}</label>
+				</div>
+			</div> <!-- end info -->
+		</div> <!-- end a1 -->
+		<div class='a2'>
+			<!-- for: ${groups} as ${group} -->
+			<div class='g-row clearfix' cid='${group.id}'>
+				<div class='type'>${group.name}</div>
+				<div class='wapper clearfix'>
+					<!-- for: ${group.values} as ${value} -->
+					<div class='value' cid='${value.id}'>${value.name}</div>
+					<!-- /for -->
+				</div>
+			</div>
+			<!-- /for -->
+		</div> <!-- end a2 -->
+		<div class='a3 clearfix'>
+			<div class='cart'>
+				<span class='glyphicon glyphicon-minus-sign'></span>
+				<span class='num'>${count}</span>
+				<span class='glyphicon glyphicon-plus-sign'></span>
+			</div>
+			<div class='gotoCart'>
+				<a href='/cart'>
+					<label>¥</label>
+					<label id='totalPrice'></label>
+				</a>
+			</div>
+		</div> <!-- end a3 -->
+	</div>
+</script>

@@ -6,7 +6,7 @@
 <div class="m-tags clearfix">
 	<% IntoTag.all_visible_and_sorted(@store).each do |tag| %>
 	<div class="m-tag">
-		<%= link_to show_path(k1: tag.k1, k2: tag.k2, b: tag.brand, store_id: @store.id) do %>
+		<%= link_to show_path(c: tag.catId, k1: tag.k1, k2: tag.k2, b: tag.brand, store_id: @store.id) do %>
 			<%= image_tag tag.icon %>
 			<label><%=tag.name %></label>
 		<% end %>

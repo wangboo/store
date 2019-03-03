@@ -13,6 +13,9 @@
 // require rails-ujs
 //= require jquery
 //= require jquery-ujs/src/rails
+//= require etpl/src/main
+//= require countup.js/countUp
+//= require countup.js/countUp-jquery
 //= require bootstrap
 //= require twitter/bootstrap/transition
 //= require twitter/bootstrap/alert
